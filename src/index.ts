@@ -1,6 +1,7 @@
 import './index.html';
 import './assets/app.less';
 import './vendor';
+
 import {AppModule} from './app/app.module';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 

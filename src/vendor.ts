@@ -6,3 +6,4 @@ import 'zone.js/dist/zone.min';
 import '@angular/core';
 import '@angular/platform-browser';
 import '@angular/platform-browser-dynamic';
+import '@angular/common/http';

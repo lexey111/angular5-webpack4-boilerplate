@@ -1,0 +1,55 @@
+@import "../../assets/variables.less";
+
+:host {
+	display: flex;
+	width: 100%;
+	flex-flow: column nowrap;
+	flex-grow: 0;
+	background-color: @footer-background;
+	color: @footer-foreground;
+	.footer-content {
+		height: @footer-height;
+		min-height: @footer-height;
+		max-height: @footer-height;
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-flow: row nowrap;
+
+		align-items: center;
+		justify-items: center;
+
+		.footer-text {
+			margin: 0 16px;
+			font-size: .8rem;
+			display: flex;
+			align-content: center;
+			justify-content: center;
+			align-items: center;
+			justify-items: center;
+		}
+
+		.vendor-logo {
+			padding: 8px;
+			width: @footer-height;
+			height: @footer-height;
+
+			cursor: pointer;
+
+			display: inline-flex;
+			align-content: center;
+			justify-content: center;
+			align-items: center;
+			justify-items: center;
+
+			fill: @footer-accent !important;
+
+			&:hover {
+				fill: @footer-active !important;
+			}
+
+			transition: all ease .2s;
+		}
+	}
+}

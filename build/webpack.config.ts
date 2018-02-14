@@ -2,18 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const cssOptions = process.env.NODE_ENV === 'production' ? {
-	sourceMap: false,
-	minimize: {
-		discardComments: {
-			removeAll: true
-		}
-	}
-} : {
-	sourceMap: true, minimize: false
-};
-
-
 export const config = {
 	entry: {
 		vendor: './src/vendor.ts',
@@ -115,6 +103,11 @@ export const config = {
 						loader: 'less-loader',
 					}
 				]
+			},
+			// svg: inline to manage styles
+			{
+				test: /\.svg$/,
+				loader: 'svg-inline-loader'
 			}
 		]
 	},
