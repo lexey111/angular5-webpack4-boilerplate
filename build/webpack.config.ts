@@ -3,7 +3,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 export const config = {
 	entry: {
-		vendor: './src/vendor.ts',
 		app: './src/index.ts',
 	},
 	target: 'web',
@@ -18,11 +17,10 @@ export const config = {
 	optimization: {
 		splitChunks: {
 			cacheGroups: {
-				vendor: {
-					chunks: 'initial',
-					test: 'vendor',
-					name: 'vendor',
-					enforce: true
+				commons: {
+					test: /[\\/]node_modules[\\/]/,
+					name: 'vendors',
+					chunks: 'all'
 				}
 			}
 		}
@@ -50,7 +48,7 @@ export const config = {
 			},
 			// Templates
 			{
-				test: /\.(html)$/,
+				test: /\.html$/,
 				exclude: /index.html$/i,
 				use: [
 					{
@@ -110,6 +108,7 @@ export const config = {
 	plugins: [
 		new webpack.DefinePlugin({
 			PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'production'),
+			BUILDTIMESTAMP: JSON.stringify(Date.now()),
 		}),
 		new CopyWebpackPlugin([
 			{

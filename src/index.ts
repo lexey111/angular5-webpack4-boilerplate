@@ -8,6 +8,7 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {enableProdMode} from '@angular/core';
 
 declare const PRODUCTION; // webpack DefinePlugin
+declare const BUILDTIMESTAMP; // webpack DefinePlugin
 
 if (PRODUCTION) {
 	console.log('PROD mode');
@@ -15,5 +16,6 @@ if (PRODUCTION) {
 } else {
 	console.log('DEV mode');
 }
+console.log('Built at:', new Date(BUILDTIMESTAMP));
 
 platformBrowserDynamic().bootstrapModule(AppModule);
