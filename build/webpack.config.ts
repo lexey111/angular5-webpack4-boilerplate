@@ -32,9 +32,16 @@ export const config = {
 	},
 	module: {
 		rules: [
+			{
+				test: /.js$/,
+				parser: {
+					system: true
+				}
+			},
 			// Typescript
 			{
 				test: /\.ts$/,
+				exclude: /node_modules/,
 				use: [
 					{
 						loader: 'ts-loader'
