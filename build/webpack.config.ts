@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 export const config = {
@@ -33,21 +32,16 @@ export const config = {
 	},
 	module: {
 		rules: [
+			// Typescript
 			{
 				test: /\.ts$/,
 				use: [
 					{
 						loader: 'ts-loader'
-					},
-					{
-						loader: 'angular2-template-loader',
-						options: {
-							keepUrl: true
-						}
 					}
 				]
 			},
-			// templates
+			// Templates
 			{
 				test: /\.(html)$/,
 				exclude: /index.html$/i,
@@ -60,7 +54,7 @@ export const config = {
 					}
 				]
 			},
-			// index
+			// index file
 			{
 				test: /index.html$/i,
 				use: [
@@ -72,7 +66,7 @@ export const config = {
 					}
 				]
 			},
-			// .less files of the components
+			// .less files - components
 			{
 				test: /\.less$/,
 				exclude: /app\.less$/i,
@@ -103,11 +97,6 @@ export const config = {
 						loader: 'less-loader',
 					}
 				]
-			},
-			// svg: inline to manage styles
-			{
-				test: /\.svg$/,
-				loader: 'svg-inline-loader'
 			}
 		]
 	},
@@ -122,14 +111,5 @@ export const config = {
 				toType: 'dir'
 			}
 		]),
-		// workaround https://github.com/angular/angular/issues/11580#issuecomment-282705332
-		new webpack.ContextReplacementPlugin(
-			/(.+)?angular([\\\/])core(.+)?/,
-			root('./src'), {}
-		),
 	],
 };
-
-function root(__path) {
-	return path.join(__dirname, __path);
-}
