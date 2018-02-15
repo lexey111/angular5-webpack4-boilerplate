@@ -1,27 +1,21 @@
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ngcWebpack = require('ngc-webpack');
 
 export const config = {
 	entry: {
 		app: './src/index.ts'
 	},
 	target: 'web',
-	/*
-	output: {
-		path: path.resolve('./dist'),
-		publicPath: '.',
-		filename: '[name].js',
-		chunkFilename: '[id].js'
-	},
-	*/
 	devtool: process.env.NODE_ENV === 'production' ? false : 'inline-source-map',
 	optimization: {
 		splitChunks: {
 			cacheGroups: {
-				commons: {
+				vendor: {
 					test: /[\\/]node_modules[\\/]/,
 					name: 'vendor',
-					chunks: 'all'
+					chunks: 'initial',
+					enforce: true
 				}
 			}
 		}
@@ -41,11 +35,7 @@ export const config = {
 			{
 				test: /\.ts$/,
 				exclude: /node_modules/,
-				use: [
-					{
-						loader: 'ts-loader'
-					}
-				]
+				use: '@ngtools/webpack'
 			},
 			// Templates
 			{
@@ -53,10 +43,7 @@ export const config = {
 				exclude: /index.html$/i,
 				use: [
 					{
-						loader: 'file-loader',
-						options: {
-							name: 'assets/templates/[name].[ext]'
-						}
+						loader: 'raw-loader'
 					}
 				]
 			},
@@ -69,22 +56,6 @@ export const config = {
 						options: {
 							name: '[name].[ext]'
 						}
-					}
-				]
-			},
-			// .less files - components
-			{
-				test: /\.less$/,
-				exclude: /app\.less$/i,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: 'assets/templates/[name].css'
-						}
-					},
-					{
-						loader: 'less-loader',
 					}
 				]
 			},
@@ -107,6 +78,10 @@ export const config = {
 		]
 	},
 	plugins: [
+		new ngcWebpack.NgcWebpackPlugin({
+			tsConfigPath: './tsconfig.json',
+			mainPath: './src/index.ts'
+		}),
 		new webpack.DefinePlugin({
 			PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'production'),
 			BUILDTIMESTAMP: JSON.stringify(Date.now()),
