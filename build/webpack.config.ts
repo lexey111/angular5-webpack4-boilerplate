@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 export const config = {
 	entry: {
-		app: './src/index.ts',
+		app: './src/index.ts'
 	},
 	target: 'web',
 	/*
@@ -14,12 +14,13 @@ export const config = {
 		chunkFilename: '[id].js'
 	},
 	*/
+	devtool: process.env.NODE_ENV === 'production' ? false : 'inline-source-map',
 	optimization: {
 		splitChunks: {
 			cacheGroups: {
 				commons: {
 					test: /[\\/]node_modules[\\/]/,
-					name: 'vendors',
+					name: 'vendor',
 					chunks: 'all'
 				}
 			}
@@ -114,6 +115,11 @@ export const config = {
 			{
 				from: './src/assets/images',
 				to: './assets/images',
+				toType: 'dir'
+			},
+			{
+				from: './src/assets/shim',
+				to: './assets',
 				toType: 'dir'
 			}
 		]),

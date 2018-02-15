@@ -6,5 +6,7 @@ import {Component} from '@angular/core';
 	styleUrls: [require('./footer.component.less')]
 })
 export class FooterComponent {
-	title: String = 'Angular 5 app started';
+	constructor() {
+		//
+	}
 }
